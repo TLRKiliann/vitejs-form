@@ -48,3 +48,9 @@ button:active {
   background: lightgreen;
   color: #000;
 }
+
+.error {
+  text-align: left;
+  font-size: 1.0rem;
+  color: orangered;
+}
