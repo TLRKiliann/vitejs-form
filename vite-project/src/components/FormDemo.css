@@ -10,6 +10,13 @@ form {
 }
 
 .form-control {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.custom--number {
+  margin: auto;
   display: flex;
   flex-direction: column;
 }
@@ -29,9 +36,9 @@ input {
 button {
   padding: 12px 0px;
   margin-top: 30px;
-  margin-right: 80px;
+  margin-right: 500px;
   margin-bottom: 10px;
-  margin-left: 80px;
+  margin-left: 500px;
   font-size: 1.0rem;
   font-weight: bold;
   color: whitesmoke;
@@ -54,6 +61,7 @@ button:active {
 }
 
 .error {
+  margin: auto;
   text-align: left;
   font-size: 1.0rem;
   color: orangered;

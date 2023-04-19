@@ -1,8 +1,9 @@
+//import React, {useState} from 'react'
 import { useForm, useFieldArray } from 'react-hook-form';
-//import { DevTool } from "@hookform/devtools";
+import { DevTool } from "@hookform/devtools";
 import './FormDemo.css';
 
-//let renderCount = 0;
+let renderCount = 0;
 
 type FormValues = {
   username: string;
@@ -12,6 +13,8 @@ type FormValues = {
   phNumber: {
     number: string
   }[];
+  age: number;
+  dob: Date;
 };
 
 const FormDemo = () => {
@@ -20,27 +23,46 @@ const FormDemo = () => {
       username: "",
       email: "",
       channel: "",
-      phoneNumber: ["", ""],
-      phNumber: [{ number: '' }]
+      phoneNumber: ["", ""], //array
+      phNumber: [{ number: '' }], //object array
+      age: 0,
+      dob: new Date(),
     },
   });
 
-  const { register, control, handleSubmit, formState } = form;
+  const { register, control, handleSubmit, formState, watch, getValues } = form;
   const { errors } = formState;
 
   const { fields, append, remove } = useFieldArray({
     name: "phNumber",
     control
-  })
+  });
 
+  //watch("username")
+  //watch(["username", "channel"])
+  const watchValuesForm = watch();
+
+  //e: React.FormEvent<HTMLFormElement>
+  //e.prevent.default() //prevent rerendering
+  //{(e) => handleSubmit(e, onSubmit)}
   const onSubmit = (data: FormValues) => {
     console.log("Form submitted", data);
   };
 
-  //renderCount++;
-  // <h1>Render : {renderCount/2}</h1>
+  //getValues(["username", "channel"]) or getValues("username").
+  const handleGetValues = () => {
+    console.log("getValues : ", getValues())
+  };
+
+  console.log("date", typeof(dob))
+
+  renderCount++;
   return (
     <div>
+
+      <h1>Render : {renderCount/2}</h1>
+      <h2>watchValuesForm : {JSON.stringify(watchValuesForm)}</h2>
+
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
 
         <div className="form-control">
@@ -65,7 +87,8 @@ const FormDemo = () => {
 
         <div className="form-control">
           <label htmlFor="channel">channel</label>
-          <input type="text" id="channel" {...register("channel")} />
+          <input type="text" id="channel" {...register("channel",
+            {required:{ value: true, message: "channel is required"}})} />
           <p className="error">{errors.channel?.message}</p>
         </div>
 
@@ -79,7 +102,7 @@ const FormDemo = () => {
           <input type="text" id="secondary-phone" {...register("phoneNumber.1")} />
         </div>
 
-        <div>
+        <div className="custom--number">
           {fields.map((field, index) => (
               <div className="form-control" key={field.id}>
                 <label>Another Phone number</label>
@@ -98,8 +121,33 @@ const FormDemo = () => {
           </button>
         </div>
 
-        <button type="submit" className="button">Submit</button>
+        <div className="form-control">
+          <label htmlFor="age">age</label>
+          <input type="number" id="age" {...register("age",{
+            valueAsNumber: true,
+            required: {
+              value: true,
+              message: "age is required"
+            }})}
+          />
+          <p className="error">{errors.age?.message}</p>
+        </div>
 
+        <div className="form-control">
+          <label htmlFor="dob">Date of birthday</label>
+          <input type="date" id="dob" {...register("dob",{
+            valueAsDate: true,
+            required: {
+              value: true,
+              message: "dob is required"
+            }})}
+          />
+          <p className="error">{errors.dob?.message}</p>
+        </div>
+
+        <button type="submit" className="button">Submit</button>
+        <button type="button" onClick={handleGetValues}className="button">handleGetValues</button>
+        <DevTool control={control} />
       </form>
     </div>
   )
