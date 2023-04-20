@@ -23,14 +23,15 @@ const FormDemo = () => {
       username: "",
       email: "",
       channel: "",
-      phoneNumber: ["", ""], //array
-      phNumber: [{ number: '' }], //object array
+      phoneNumber: ["", ""],
+      phNumber: [{ number: '' }],
       age: 0,
       dob: new Date(),
     },
   });
 
   const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
+
   const { errors, touchedFields, dirtyFields } = formState;
 
   console.log({ touchedFields, dirtyFields })
@@ -68,6 +69,7 @@ const FormDemo = () => {
   console.log("date", typeof(dob))
 
   renderCount++;
+
   return (
     <div>
 
@@ -156,9 +158,15 @@ const FormDemo = () => {
           <p className="error">{errors.dob?.message}</p>
         </div>
 
-        <button type="submit" className="button">Submit</button>
-        <button type="button" onClick={handleGetValues}className="button">handleGetValues</button>
-        <button type="button" onClick={handleSetValue}className="button">handleSetValue</button>
+        <button type="submit" className="button">
+          Submit
+        </button>
+        <button type="button" onClick={handleGetValues}className="button">
+          handleGetValues
+        </button>
+        <button type="button" onClick={handleSetValue}className="button">
+          handleSetValue
+        </button>
         <DevTool control={control} />
       </form>
     </div>
