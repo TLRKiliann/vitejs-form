@@ -30,8 +30,10 @@ const FormDemo = () => {
     },
   });
 
-  const { register, control, handleSubmit, formState, watch, getValues } = form;
-  const { errors } = formState;
+  const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
+  const { errors, touchedFields, dirtyFields } = formState;
+
+  console.log({ touchedFields, dirtyFields })
 
   const { fields, append, remove } = useFieldArray({
     name: "phNumber",
@@ -53,6 +55,15 @@ const FormDemo = () => {
   const handleGetValues = () => {
     console.log("getValues : ", getValues())
   };
+
+  //setValue
+  const handleSetValue = () => {
+    setValue("username", "", {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,  
+    })
+  }
 
   console.log("date", typeof(dob))
 
@@ -147,6 +158,7 @@ const FormDemo = () => {
 
         <button type="submit" className="button">Submit</button>
         <button type="button" onClick={handleGetValues}className="button">handleGetValues</button>
+        <button type="button" onClick={handleSetValue}className="button">handleSetValue</button>
         <DevTool control={control} />
       </form>
     </div>
