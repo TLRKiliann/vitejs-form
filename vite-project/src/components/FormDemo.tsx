@@ -1,5 +1,5 @@
-//import React, {useState} from 'react'
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useEffect } from 'react'
+import { useForm, useFieldArray, FieldErrors } from 'react-hook-form';
 import { DevTool } from "@hookform/devtools";
 import './FormDemo.css';
 
@@ -28,26 +28,48 @@ const FormDemo = () => {
       age: 0,
       dob: new Date(),
     },
+    mode: "onBlur",
   });
 
-  const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState,
+    watch,
+    getValues,
+    setValue,
+    reset,
+    trigger} = form;
 
-  const { errors, touchedFields, dirtyFields } = formState;
+  const {
+    errors,
+    touchedFields,
+    dirtyFields,
+    isDirty,
+    isValid,
+    isSubmitting,
+    isSubmitted,
+    isSubmitSuccessful} = formState;
 
-  console.log({ touchedFields, dirtyFields })
+  console.log({isSubmitting, isSubmitted, isSubmitSuccessful});
+
+  console.log({ touchedFields, dirtyFields, isDirty, isValid })
 
   const { fields, append, remove } = useFieldArray({
     name: "phNumber",
     control
   });
 
-  //watch("username")
-  //watch(["username", "channel"])
+  //watch("username") or watch(["username", "channel"])
   const watchValuesForm = watch();
 
-  //e: React.FormEvent<HTMLFormElement>
-  //e.prevent.default() //prevent rerendering
-  //{(e) => handleSubmit(e, onSubmit)}
+  //error (enter email but nothing into channel)
+  const onError = (errors: FieldErrors<FieldValue>) => {
+    console.log("Errors from rhf: ", errors)
+  }
+
+  //data is visible
   const onSubmit = (data: FormValues) => {
     console.log("Form submitted", data);
   };
@@ -68,6 +90,12 @@ const FormDemo = () => {
 
   console.log("date", typeof(dob))
 
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset()
+    }
+  }, [isSubmitSuccessful, reset]);
+
   renderCount++;
 
   return (
@@ -76,7 +104,7 @@ const FormDemo = () => {
       <h1>Render : {renderCount/2}</h1>
       <h2>watchValuesForm : {JSON.stringify(watchValuesForm)}</h2>
 
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <form className="form" onSubmit={handleSubmit(onSubmit, onError)} noValidate>
 
         <div className="form-control">
           <label htmlFor="username">username</label>
@@ -99,10 +127,25 @@ const FormDemo = () => {
         </div>
 
         <div className="form-control">
-          <label htmlFor="channel">channel</label>
+          <label htmlFor="channel">channel (enter email before access)</label>
           <input type="text" id="channel" {...register("channel",
-            {required:{ value: true, message: "channel is required"}})} />
+            {
+              disabled: watch("email") === "",
+              required: { value: true, message: "channel is required"
+            }
+          })} />
           <p className="error">{errors.channel?.message}</p>
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="channel2">channel2 (disabled)</label>
+          <input type="text" id="channel2" {...register("channel2",
+            {
+              disabled: true,
+              required: "channel2 is required"
+            }
+          )} />
+          <p className="error">{errors.channel2?.message}</p>
         </div>
 
         <div className="form-control">
@@ -158,15 +201,20 @@ const FormDemo = () => {
           <p className="error">{errors.dob?.message}</p>
         </div>
 
-        <button type="submit" className="button">
+        <button disabled={!isDirty || !isValid} type="submit" className="button">
           Submit
         </button>
+
+        <button type="button" onCick={() => reset()}>Reset</button>
+
         <button type="button" onClick={handleGetValues}className="button">
           handleGetValues
         </button>
+        
         <button type="button" onClick={handleSetValue}className="button">
           handleSetValue
         </button>
+        
         <DevTool control={control} />
       </form>
     </div>
@@ -174,4 +222,3 @@ const FormDemo = () => {
 }
 
 export default FormDemo;
-//      <DevTool control={control} />
