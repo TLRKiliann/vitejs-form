@@ -18,22 +18,43 @@ Vite form with best practices with React-Hook-Form
 
 └─ $ ▶ pnpm add -D @hookform/devtools
 
+Use:
+
+```
+import { DevTool } from "@hookform/devtools";
+
+...
+
+const { ..., control, ... } = form;
+
+&
+
+  ...
+  <devtools constrol={control}>
+</form>
+
+just before form tag close
+
+```
+
 You've got a small pink square in top right screen of your browser.
 Click it and it will show you the state of input from form.
 
-That's about :
+---
 
--Default Values
--Object & array values
--Dynamic fields
--Numeric & date values
--Watch, get & set field values
--Touched & dirty states
--Handle submission errors
--Form submission state
--Reset form
--Validation modes
--Manually trigger validations
+The differents subjects of this project :
+
+- Default Values
+- Object & array values
+- Dynamic fields
+- Numeric & date values
+- Watch, get & set field values
+- Touched & dirty states
+- Handle submission errors
+- Form submission state
+- Reset form
+- Validation modes
+- Manually trigger validations
 
 ## Watch
 
@@ -52,6 +73,8 @@ import { useForm, useFieldArray, FieldErrors } from 'react-hook-form';
   ...
 
       <form className="form" onSubmit={handleSubmit(onSubmit, onError)} noValidate>
+
+        <p className="error">{errors.username?.message}</p>
 ```
 
 ## Disabled (23)
@@ -165,15 +188,78 @@ Or especify for one field:
 
 Schema validation library
 
-pnpm i yup @hookform/resolvers
+└─ $ ▶ pnpm i yup @hookform/resolvers
 
-## Zod (ZodComponent.tsx) -30
+Look at the YupComponent
+
+```
+import { yupResolvers } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object({
+  username: yup.string().required("Username is required")
+  email: yup.string().email("Email format is not valid").required("Email is required")
+  channel: yup.string().required("Channel is required")
+});
+
+type FormValues = {
+  username: string;
+  email: string;
+  channel: string;
+}
+
+const YupComponent = () => {
+  const form = useForm<FormValues>({
+    defaultValues: {
+      username: "",
+      email: "",
+      channel: "",
+    },
+    resolver: yupResolver(schema)
+  });
+  ...
+
+```
+
+## Zod (ZodComponent.tsx) - 30
 
 TypeScript Schema declaration & validation library
 
-pnpm i zod
+└─ $ ▶ pnpm i zod
 
----
+Look at the ZodComponent
 
-Thanks to Vishwas !
+```
+import { zodResolvers } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import './styles.css';
+
+const schema = z.object({
+  username: z.string().nonempty("Username is required")
+  email: z.string().nonempty("Email is required").email("Email format is not valid")
+  channel: z.string().nonempty("Channel is required")
+});
+
+type FormValues = {
+  username: string;
+  email: string;
+  channel: string;
+};
+
+const ZodComponent = () => {
+
+  const form = useForm<FormValues>({
+    defaultValues: {
+      username: "",
+      email: "",
+      channel: ""
+    },
+    resolver: zodResolver(schema)
+  });
+  ...
+```
+
+Last video (31) about react-hook-form of Vishwas is about Mui.
+
+Thanks you Vishwas !
 

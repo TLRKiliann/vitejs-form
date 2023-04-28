@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm, useFieldArray, FieldErrors } from 'react-hook-form';
 import { DevTool } from "@hookform/devtools";
-import './FormDemo.css';
+import './styles.css';
 
 let renderCount = 0;
 
