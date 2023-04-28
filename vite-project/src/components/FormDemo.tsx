@@ -160,11 +160,11 @@ const FormDemo = () => {
 
         <div className="custom--number">
           {fields.map((field, index) => (
-              <div className="form-control" key={field.id}>
+              <div className="other-control" key={field.id}>
                 <label>Another Phone number</label>
                 <input type="text" {...register(`phNumber.${index}.number` as const)} />
                 {index > 0 && (
-                  <button type="button" onClick={() => remove(index)}>
+                  <button type="button" onClick={() => remove(index)} className="remove--btn">
                     Remove phone
                   </button>
                   )
@@ -172,7 +172,7 @@ const FormDemo = () => {
               </div>
             )) 
           }
-          <button type="button" onClick={() => append({ number: "" })}>
+          <button type="button" onClick={() => append({ number: "" })} className="add--btn">
             Add phone number
           </button>
         </div>
@@ -201,20 +201,28 @@ const FormDemo = () => {
           <p className="error">{errors.dob?.message}</p>
         </div>
 
-        <button disabled={!isDirty || !isValid} type="submit" className="button">
-          Submit
-        </button>
+        <div className="btn--div">
+          <button disabled={!isDirty || !isValid} type="submit" className="main--button">
+            Submit
+          </button>
+        </div>
 
-        <button type="button" onCick={() => reset()}>Reset</button>
+        <div className="btn--div">
+          <button type="button" onCick={() => reset()} className="main--button">Reset</button>
+        </div>
 
-        <button type="button" onClick={handleGetValues}className="button">
-          handleGetValues
-        </button>
-        
-        <button type="button" onClick={handleSetValue}className="button">
-          handleSetValue
-        </button>
-        
+        <div className="btn--div">
+          <button type="button" onClick={handleGetValues} className="main--button">
+            handleGetValues
+          </button>
+        </div>
+
+        <div className="btn--div">
+          <button type="button" onClick={handleSetValue} className="main--button">
+            handleSetValue
+          </button>
+        </div>
+
         <DevTool control={control} />
       </form>
     </div>

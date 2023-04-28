@@ -1,12 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { DevTool } from "@hookform/devtools";
-import { yupResolvers } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import './styles.css';
 
 const schema = yup.object({
-  username: yup.string().required("Username is required")
-  email: yup.string().email("Email format is not valid").required("Email is required")
+  username: yup.string().required("Username is required"),
+  email: yup.string().email("Email format is not valid").required("Email is required"),
   channel: yup.string().required("Channel is required")
 });
 
@@ -57,7 +57,9 @@ const YupComponent = () => {
           <p className="error">{errors.channel?.message}</p>
         </div>
 
-        <button type="submit">Submit</button>
+        <div className="btn--div">
+          <button type="submit" className="main--button">Submit</button>
+        </div>
 
         <DevTool control={control} />
       </form>

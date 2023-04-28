@@ -193,12 +193,12 @@ Schema validation library
 Look at the YupComponent
 
 ```
-import { yupResolvers } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 const schema = yup.object({
-  username: yup.string().required("Username is required")
-  email: yup.string().email("Email format is not valid").required("Email is required")
+  username: yup.string().required("Username is required"),
+  email: yup.string().email("Email format is not valid").required("Email is required"),
   channel: yup.string().required("Channel is required")
 });
 
@@ -230,13 +230,13 @@ TypeScript Schema declaration & validation library
 Look at the ZodComponent
 
 ```
-import { zodResolvers } from '@hookform/resolvers/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import './styles.css';
 
 const schema = z.object({
-  username: z.string().nonempty("Username is required")
-  email: z.string().nonempty("Email is required").email("Email format is not valid")
+  username: z.string().nonempty("Username is required"),
+  email: z.string().nonempty("Email is required").email("Email format is not valid"),
   channel: z.string().nonempty("Channel is required")
 });
 

@@ -1,12 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { DevTool } from "@hookform/devtools";
-import { zodResolvers } from '@hookform/resolvers/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import './styles.css';
 
 const schema = z.object({
-  username: z.string().nonempty("Username is required")
-  email: z.string().nonempty("Email is required").email("Email format is not valid")
+  username: z.string().nonempty("Username is required"),
+  email: z.string().nonempty("Email is required").email("Email format is not valid"),
   channel: z.string().nonempty("Channel is required")
 });
 
@@ -57,6 +57,10 @@ const ZodComponent = () => {
           <p className="error">{errors.channel?.message}</p>
         </div>
       
+        <div className="btn--div">
+          <button type="submit" className="main--button">Submit</button>
+        </div>
+
         <DevTool control={control} />
       </form>
     </div>

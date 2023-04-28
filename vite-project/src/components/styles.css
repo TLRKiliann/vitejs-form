@@ -1,10 +1,11 @@
 form {
   padding: 20px 20px;
-  width: 100%;
+  width: 80%;
+  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: left;
-  background-color: #555555;
+  background-color: slategray;
   border-radius: 7px;
   box-shadow: 0px 0px 7px grey;
 }
@@ -21,6 +22,12 @@ form {
   flex-direction: column;
 }
 
+.other-control {
+  display: flex;
+  flex-direction: column;
+
+}
+
 label {
   margin-top: 10px;
   margin-bottom: 5px;
@@ -33,12 +40,36 @@ input {
   padding: 5px 10px;
 }
 
-button {
-  padding: 12px 0px;
-  margin-top: 30px;
-  margin-right: 500px;
-  margin-bottom: 10px;
-  margin-left: 500px;
+.add--btn {
+  margin-top: 20px;
+  padding: 12px 10px;
+  font-size: 1.0rem;
+  font-weight: bold;
+  color: whitesmoke;
+  background-color: royalblue;
+  border-radius: 7px;
+  box-shadow: 0px 0px 7px 0px #c8c8c8;
+}
+
+.remove--btn {
+  margin-top: 20px;
+  padding: 12px 10px;
+  font-size: 1.0rem;
+  font-weight: bold;
+  color: whitesmoke;
+  background-color: royalblue;
+  border-radius: 7px;
+  box-shadow: 0px 0px 7px 0px #c8c8c8; 
+}
+
+.btn--div {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.main--button {
+  padding: 12px 20px;
   font-size: 1.0rem;
   font-weight: bold;
   color: whitesmoke;
